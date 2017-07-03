@@ -241,17 +241,17 @@ if (Meteor.isClient) {
                             switch (a.index) {
                                 case 0:
                                     {
-                                        window.open("/stats#p_4", "_self");
+                                        window.open("/buscador/stats#p_4", "_self");
                                     }
                                     break;
                                 case 1:
                                     {
-                                        window.open("/stats#p_2", "_self");
+                                        window.open("/buscador/stats#p_2", "_self");
                                     }
                                     break;
                                 case 2:
                                     {
-                                        window.open("/stats#p_3", "_self");
+                                        window.open("/buscador/stats#p_3", "_self");
                                     }
                                     break;
 
@@ -2191,16 +2191,16 @@ if (Meteor.isClient) {
                     switch (OneResult.Type) {
                         case 'http://xmlns.com/foaf/0.1/Person':
                             OneResult.Icon = 'glyphicon glyphicon-user';
-                            OneResult.Image='/images/personIcon.png'
+                            OneResult.Image='/buscador/images/personIcon.png'
                             break;
                         case 'http://purl.org/ontology/bibo/Collection':
                             OneResult.Icon = 'glyphicon glyphicon-folder-open';
-                            OneResult.Image='/images/CollectionIcon.png'
+                            OneResult.Image='/buscador/images/CollectionIcon.png'
 
                             break;
                         default :
                             OneResult.Icon = 'glyphicon glyphicon-file';
-                            OneResult.Image='/images/documentIcon.png'
+                            OneResult.Image='/buscador/images/documentIcon.png'
 
                             break;
                     }
@@ -2219,17 +2219,13 @@ if (Meteor.isClient) {
 
                     //Asign name of source
                     try {
-                      if(resp[k].EntityURI.value.includes('library')){
+                      if(resp[k].organization_des!=undefined){
 
-                        OneResult.Source= 'CD-JBV';
-                      }
-                      else if(resp[k].EntityURI.value.includes('ebraryec')){
-                        OneResult.Source= 'Ebrary EC';
+                        OneResult.Source= resp[k].organization_des.value;
+                      }else{
+                        OneResult.Source='U-Cuenca';
                       }
 
-                      else {
-                        OneResult.Source= 'Dspace UC';
-                      }
                       if(OneResult.Image!= undefined){
                         OneResult.Image = resp[k].Image.value;
                       }
@@ -2249,11 +2245,11 @@ if (Meteor.isClient) {
                     });
                     if (favorite) {
 
-                        OneResult.Fav = "/images/starblue.png";
+                        OneResult.Fav = "/buscador/images/starblue.png";
 
                     } else {
 
-                        OneResult.Fav = "/images/stargray.png";
+                        OneResult.Fav = "/buscador/images/stargray.png";
 
                     }
 

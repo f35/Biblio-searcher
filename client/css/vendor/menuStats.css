@@ -1,17 +1,17 @@
 #menuStats h3 {
-    
-    color: #b11;
-    
+
+    color: #ffffff;
+
 }
 
 
 
 #menuStats {
   position: fixed;
-  top: 15px;
-  width: 10%;
+  top: 30px;
+  width: 12%;
+  height: 100%;
   color: #ffffff;
-  height: 200px;
   text-align: left;
   padding-top: 15px;
   /* Adds shadow to the bottom of the bar */
@@ -19,12 +19,12 @@
   -moz-box-shadow: 0px 0px 8px 0px #000000;
   box-shadow: 0px 0px 8px 0px #000000;
   /* Adds the transparent background */
-  background-color: rgba(0, 0, 85, 0.7);
-  color: rgba(1, 1, 1, 0.8);
+  background-color:  rgba(41, 41, 41, 0.6);
+  color: rgba(251,251,251, 0.8);
 }
 
 #menuStats a {
-	font-size: 14px;
+	font-size: 18px;
 	padding-left: 15px;
 	padding-right: 15px;
 	color: white;
@@ -38,24 +38,25 @@
 .statDiv {
 	border-radius: 5px;
 	border: 2px solid rgba(255,0,0,0.5);
-	
-	
+
+
 }
 #ContainerCC_DOC {
-	background-image: url('http://stats.xonotic.org/static/css/img/web_background_2.jpg');
+
+	background-image: url('/images/volcan.jpg');
 }
 
 
 #ContainerCC {
-	background-image: url('http://stats.xonotic.org/static/css/img/web_background_2.jpg');
+	background-image: url('/images/volcan.jpg');
 }
 
 #ContainerCC_PER {
-	background-image: url('http://stats.xonotic.org/static/css/img/web_background_2.jpg');
+	background-image: url('/images/volcan.jpg');
 }
 
 #ContainerCC_COL {
-	background-image: url('http://stats.xonotic.org/static/css/img/web_background_2.jpg');
+	background-image: url('/images/volcan.jpg');
 }
 
 
@@ -69,7 +70,7 @@
 
 
 
-path { 
+path {
     stroke: steelblue;
     stroke-width: 2;
     /*fill: none;*/
@@ -83,15 +84,15 @@ path {
     shape-rendering: crispEdges;
 }
 
-div.tooltip {	
-    position: absolute;			
-    text-align: center;			
-    width: 60px;					
-    height: 28px;					
-    padding: 2px;				
-    font: 12px sans-serif;		
-    background: lightsteelblue;	
-    border: 0px;		
-    border-radius: 8px;			
-    pointer-events: none;			
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 60px;
+    height: 28px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
 }

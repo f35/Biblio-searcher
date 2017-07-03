@@ -67,14 +67,26 @@ body {
   position: fixed;
   top: 48px;
   bottom: 40px;
-  left: -120px;
+  /*left: -120px;*/
   z-index: 1000;
   padding: 0px;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   background-color: #ffffff;
-  width: 34%;
+  /*width: 34%;*/
   }
+  .sidebar-style2 {
+    position: fixed;
+    top: 48px;
+    bottom: 40px;
+   left: -120px;
+    z-index: 1000;
+    padding: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #ffffff;
+   width: 34%; 
+}
 
 /* Sidebar navigation */
 .nav-sidebar {

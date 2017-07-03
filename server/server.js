@@ -484,12 +484,16 @@ var num_auto=0;
       name: 'UpdateStats',
       schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 336 hours');
+        return parser.text('every 24 hours');
       },
       job: function() {
           try{
             Meteor.call('updateStats');
-          }catch(e){}
+            console.log('Haciendo estadisticas');
+          }catch(e){
+            console.log('Error en  estadisticas');
+            console.log(e);
+          }
         return 0;
       }
     });
@@ -2472,7 +2476,7 @@ Api.addRoute('sparql', {authRequired: false}, {
                 } else {
                     console.log("Skipping Graph Schema fetching process for endpoint: " + endpointURI + ' <' + defaultGraph + '>');
                 }
-              //  Meteor.call('updateStats');
+                Meteor.call('updateStats');
                 return response;
             },
             updateBaseEndpoint: function (endpointURI, defaultGraph) {

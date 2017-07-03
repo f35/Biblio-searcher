@@ -233,7 +233,7 @@ el proceso en la publicación de LOD. </p>
 												{{Source}}
 											</span>
 											<div>
-												<a href="#" title="QR Code" class="qricon" datauri ="{{URI}}"  onclick="qrmodalshow('{{URI}}','{{Origin}}','{{Icon}}');"   ><img src="/images/qr2.png" width=20px ></a>
+												<a href="#" title="QR Code" class="qricon" datauri ="{{URI}}"  onclick="qrmodalshow('{{URI}}','{{Origin}}','{{Icon}}');"   ><img src="/buscador/images/qr2.png" width=20px ></a>
 											 <span id="dwnload" class="glyphicon glyphicon-save" onclick="download('{{URI}}')"> </span>
 										 	</div>
 										</div>
@@ -258,7 +258,11 @@ el proceso en la publicación de LOD. </p>
 						<!--	</div>
 						-->
 						<div class="result-text col-md-14">
-							<span class="Title-result"> <b> {{Label}}
+							<span class="Title-result"> <b>
+
+								<a   class="opt-fuente" href="#"  data-uri="{{URI}}" data-endpoint="{{Origin}}" onclick="linkg2(event);" >{{Label}}</a>
+
+
 								</b>
 							</span>
 						         <a href="#" title="Favoritos" class="fav"  onclick="favaction ('{{URI}}','{{Label}}');"   ><img class= "imgfav" src="{{Fav}}" width=19px ></a>

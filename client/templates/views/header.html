@@ -9,8 +9,8 @@
             <span class="icon-bar"></span>
           </button>
 
-            <a class="brand" style="margin: 0; float: none;" href="/" draggable="false">
-                  <img src="/images/libros.png" alt="ucuenca" style="height:50px" draggable="false">
+            <a class="brand" style="margin: 0; float: none;" href="/buscador/" draggable="false">
+                  <img src="/buscador/images/libros.png" alt="ucuenca" style="height:50px" draggable="false">
             </a>
             <span style="margin:0.4em; color:white;">Biblioteca</span>
 
@@ -18,12 +18,12 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
            <!-- <li><a href="/" draggable="false">{{ lang "Home" }}</a></li> -->
-	    <li><a href="/search" draggable="false">{{ lang "Search" }}</a></li>
+	    <li><a href="/buscador/search" draggable="false">{{ lang "Search" }}</a></li>
           <!--  <li><a href="/nlsearch" draggable="false" enabled="false" hidden="true"  >{{ lang "NL Search" }} ( <i>&beta;</i> )</a></li> -->
-            <li><a href="/stats" draggable="false">{{ lang "Statistics"}}</a></li>
+            <li><a href="/buscador/stats" draggable="false">{{ lang "Statistics"}}</a></li>
             {{#if access_adv }}
-            <li><a href="/samples" draggable="false">{{lang "query-temp"}}</a></li>
-            <li><a href="/dashboard" draggable="false">{{lang "query-builder"}}</a></li>
+            <li><a href="/buscador/samples" draggable="false">{{lang "query-temp"}}</a></li>
+            <li><a href="/buscador/dashboard" draggable="false">{{lang "query-builder"}}</a></li>
             {{/if}}
             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" draggable="false" id="options">{{ lang "Options"}}<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -44,21 +44,21 @@
               <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <!-- <li role="presentation" class="dropdown-header" draggable="false">SPARQL endpoint</li> -->
-                <li><a href="/profile" data-toggle="modal" draggable="false">{{ lang "My_Profile"}}</a></li>
-                <li><a href="/adminpanel" data-toggle="modal"  draggable="false">{{ lang "Accounts"}}</a></li>
-                <li><a href="/favsearch" data-toggle="modal"  draggable="false"> Consultas </a></li>
+                <li><a href="/buscador/profile" data-toggle="modal" draggable="false">{{ lang "My_Profile"}}</a></li>
+                <li><a href="/buscador/adminpanel" data-toggle="modal"  draggable="false">{{ lang "Accounts"}}</a></li>
+                <li><a href="/buscador/favsearch" data-toggle="modal"  draggable="false"> Consultas </a></li>
                </ul>
                </li>
             {{ else}}
               {{#if currentUser}}
-              <li><a href="/profile"  draggable="false">{{lang "Profile"}}</a></li>
-              <li><a href="/favsearch" data-toggle="modal"  draggable="false"> Consultas </a></li>
+              <li><a href="/buscador/profile"  draggable="false">{{lang "Profile"}}</a></li>
+              <li><a href="/buscador/favsearch" data-toggle="modal"  draggable="false"> Consultas </a></li>
               {{ else}}
 
               {{/if}}
              {{/if}}
              <!--<li><a href="#" data-toggle="modal" data-target="#myModal" draggable="false">{{lang "Help"}}</a></li>  -->
-           <li><a href="/help" data-toggle="modal" draggable="false">{{lang "Help"}}</a></li>
+           <li><a href="/buscador/help" data-toggle="modal" draggable="false">{{lang "Help"}}</a></li>
           <!--  <li>  <div class="navbar-right"> {{> loginButtons}} </div></li> -->
           </ul>
            <ul class="nav navbar-nav navbar-right">

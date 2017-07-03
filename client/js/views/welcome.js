@@ -39,38 +39,38 @@ this.WelcomeView = Backbone.View.extend({
      //console.log (window_height);
     // $(".lavel-up-header, .lavel-up-color-overlay").css('min-height', window_height);
    //  $(window).bind('resize', level_up_min_height);
-   
+
 
     return this;
-  } , 
-  setEvents: function (divNode) {  
+  } ,
+  setEvents: function (divNode) {
 /*
-    $("#lang-esp").click(function () {   
+    $("#lang-esp").click(function () {
   language ();
      //lang.init("SESSION","es");
   //   change_language("es");
-  
+
   });
 
-$("#lang-en").click(function () {   
+$("#lang-en").click(function () {
   language ();
    // lang.init("SESSION","en");
   // change_language("en");
-  
+
   });*/
 
  /*   alert($("#documentos"));
-   $("radio#documentos").on('click', function (ev) {  
+   $("radio#documentos").on('click', function (ev) {
     //alert($('input:radio[id=documentos]:checked').val());
     $(".recurso").text ("Buscando por: Documentos");
     alert("click");
   });
-  
+
   $("radio#autores").on('click', function (ev) {
     $(".recurso").text ("Buscando por: Autores");
   });
-  
-  $("radio#colecciones").on('click', function (ev) {  
+
+  $("radio#colecciones").on('click', function (ev) {
     $(".recurso").text ("Buscando por: Colecciones");
   });
   */
@@ -92,25 +92,23 @@ search_query = function (e) {
                console.log (result);
             //   alert (result);
           //  alert ("Hola");
-          
+
 
    // var en = Endpoints.find({name: obj.attributes['data-endpoint'].value}).fetch()[0]
     var v1 = encodeURIComponent($('input:text[name=terms]').val());
     var v2 = encodeURIComponent($('input:radio[name=opciones]:checked').val());
     var v3 = encodeURIComponent(result.name);
-    window.open('/search/' + v1 + '/' + v2 + '/' + v3 ,"_self" );
+    window.open('/buscador/search/' + v1 + '/' + v2 + '/' + v3 ,"_self" );
     });
 };
 
 Template.welcomePage.helpers({
    user_access: function() {
   if (!_.isNull(Meteor.user())&& !_.isUndefined(Meteor.user())) {
-        
+
          return true;
     } else {
     return false;
     }
-   
+
   } });
-
-

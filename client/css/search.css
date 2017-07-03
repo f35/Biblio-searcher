@@ -24,7 +24,7 @@
     line-height: 1.6;
     text-align: left;
     margin-top: 20px;
-    background-color: #FFFFFF ;
+    background-image: url('/images/volcan.jpg');
     top: 0px;
     bottom: 0px;
     position: absolute;
@@ -65,7 +65,7 @@
 .second-area {
     /* height: 500px; */
     /*background-color: #E6E6E6 ;*/
-    background-color: #fafafa ;
+    background-color: #ffffff ;
     border: 10px,10
 }
 
@@ -73,13 +73,19 @@
     /*  border-right-style: solid ;
           border-right-width: 1px;
           border-right-color: #000;*/
-    height: 500px;
+    height: 100%;
+
+
+
+
 
 }
 
 .result-area {
 
     /*height: 500px;*/
+    background-color: #ffffff;
+    left: -17px;
 }
 
 

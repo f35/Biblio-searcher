@@ -635,14 +635,14 @@ var d3tip = require('d3-tip')(d3);
                 nodeEnter.append("image")
                         .attr("xlink:href", function (d) {
                        if (isAuthor(d)) {
-                                return '/images/author-default.png';
+                                return '/buscador/images/author-default.png';
                                 //return AE.getSuitableImage(d.author.images);
                            } else if (isCollection(d)) {
-                               return '/images/collection.png' ;
+                               return '/buscador/images/collection.png' ;
 
                             }else {
 
-                                return '/images/documento.png' ;
+                                return '/buscador/images/documento.png' ;
                             }
                         })
                         .attr("x", "-32px")
