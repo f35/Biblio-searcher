@@ -19,6 +19,7 @@ this.Router = Backbone.Router.extend({
     'buscador/stats': 'stats',
     'buscador/dashboard/:id': 'dashboardParam',
     'buscador/graph/:uri/:endpoint/:graphuri/:typeserver':'graph',
+    'buscador/rec/:uri/:endpoint/:graphuri/:typeserver':'rec',
     'buscador/search/:term/:type/:endpoint':'search',
     'buscador/search':'search',
     'buscador/nlsearch':'nlsearch',
@@ -29,7 +30,7 @@ this.Router = Backbone.Router.extend({
       'buscador/favsearch':'favsearch' ,
       'buscador/help':'help' ,
  //   'search/:lan':'search2',
-    'buscador/': 'index',
+    'buscador': 'index',
    // ':lan': 'index',
   }, indexv : function (){
     window.open('/en','_self');
@@ -117,7 +118,13 @@ new IndexView().render();
     console.log('entra a grafos');
     new GraphView(decodeURIComponent(v1),decodeURIComponent(v2),decodeURIComponent(v3),decodeURIComponent(v4)).render();
   },
-
+  
+    rec: function(v1, v2, v3, v4) {
+      $('div.navbar .collapse li a#options').hide();
+     $('div.navbar .collapse li a#options').css('pointer-events','none');
+     console.log('entra a rec');
+     new GraphView(decodeURIComponent(v1),decodeURIComponent(v2),decodeURIComponent(v3),decodeURIComponent(v4)).render();
+  },
   dashboardParam: function(id) {
      $('div.navbar .collapse li a#options').hide();
     new DashboardView({idSample: id}).render();

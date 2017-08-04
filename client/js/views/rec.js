@@ -2,9 +2,9 @@ var jsonld = require('jsonld');
 var d3 = require("d3");
 var d3tip = require('d3-tip')(d3);
 
- this.GraphView = Backbone.View.extend({
+ this.RecView = Backbone.View.extend({
       tagName: "div",
-      id: "graph",
+      id: "rec",
 
   /////////////////////////
   // View Initialization //
@@ -34,7 +34,7 @@ var d3tip = require('d3-tip')(d3);
 
 
     this.setEvents($('#sparql-content'));
-    console.log('render Graph');
+    console.log('render rec');
     return this;
   },
   setEvents: function(divNode) {
@@ -225,11 +225,6 @@ var d3tip = require('d3-tip')(d3);
                      // _.without(compacted, _.findWhere(compacted, {id: 3}));
                       });
 
-                      console.log("asdasdasd"+resourcebase);
-
-                      //Load information
-
-
 
                     } else {
 
@@ -327,13 +322,10 @@ var d3tip = require('d3-tip')(d3);
             root = data ;
             root.x0 = viewerHeight / 2;
             root.y0 = 0;
-            console.log ("Root 1");
+            console.log ("Root");
             console.log (root);
 
-            click(root);
-
-
-
+        //    click(root);
 
               function zoom() {
                 svgGroup.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
@@ -554,14 +546,8 @@ var d3tip = require('d3-tip')(d3);
                var newHeight = d3.max(levelWidth) * 200;//100
                 tree = tree.size([newHeight, viewerWidth]);
                 // Compute the new tree layout.
-                console.log ('Raiz  dd');
+                console.log ('Raiz');
                 console.log (root);
-
-
-
-
-
-
                 var nodes = tree.nodes(root).reverse();
                 var links = tree.links(nodes);
                 // Set widths between levels
@@ -1105,17 +1091,11 @@ var d3tip = require('d3-tip')(d3);
 
                     if (isAuthor(d)) {
                         drawpanel (d , "author");
-                        Datachild(d , endpointactual );
-
                        // Datachild(d);
                     } else if (isPublication(d)) {
-                      Datachild(d , endpointactual );
-
                         drawpanel (d , "publication");
                       //  Datachild(d );
                     } else if (isCollection(d)) {
-                      Datachild(d , endpointactual );
-
                         drawpanel (d , "collection");
                       //  Datachild(d );
 
@@ -1124,7 +1104,12 @@ var d3tip = require('d3-tip')(d3);
                       //  Datachild(d );
 
                     }
+                    else if (isOrganization(d)) {
+                        drawpanel (d , "organization");
+                      //  Datachild(d );
 
+                    }
+                     Datachild(d , endpointactual );
                     //console.log ("Node");
                     //console.log (d);
                    // Datachild(d);
@@ -1141,10 +1126,6 @@ var d3tip = require('d3-tip')(d3);
                     var idbase = node["@id"];
 
                      if (isCollection(node)) { waitingDialog.show(); }
-                     if (isOrganization(node)) { waitingDialog.show(); }
-                     if (isPublisher(node)) { waitingDialog.show(); }
-
-
 
                     var prefix =  ' PREFIX dct: <http://purl.org/dc/terms/> '
                                 + ' PREFIX bibo: <http://purl.org/ontology/bibo/> '
@@ -1358,7 +1339,7 @@ var d3tip = require('d3-tip')(d3);
 
                                    console.log ("No grap");
                                   $('.top-right').notify({
-                                  message: { text: 'No se dispone información de este recurso' },
+                                  message: { text: 'Accediendo a nuevo endpoint: '+ endpointactual['endpoint'] },
                                   type: 'warning'
                                   }).show();
 
@@ -1566,6 +1547,9 @@ var d3tip = require('d3-tip')(d3);
                            else if ( value == "dcterms:publisher" )  // Change
                            {
                               entityname = 'publisher';
+                           }else if ( value == "foaf:Organization" )  // Change
+                           {
+                              entityname = 'organization';
                            }
 
                            else {
@@ -1682,22 +1666,20 @@ var d3tip = require('d3-tip')(d3);
                       entity = node.publication.data ;
                         model = {"dcterms:title": {label: "Title", containerType: "div"},
                         "bibo:abstract": {label: "Abstract", containerType: "div"},
-                        "dcterms:description": {label: "Descripción", containerType: "div"},
-                        "bibo:contect": {label: "Contenido", containerType: "div"},
                         "dcterms:language": {label: "Language", containerType: "div"},
                         "dcterms:subject": {label: "Subject", containerType: "div"},
                         "@type": {label: "Type", containerType: "div"},
-                        "bibo:isbn": {label: "ISBN", containerType: "div"},
                         "bibo:uri": {label: "URL", containerType: "a"},
                         "bibo:handle": {label: "More Info", containerType: "a"},
                         "dcterms:publisher": {label: "Publisher", containerType: "div"},
                         "bibo:numPages": {label: "Pages", containerType: "div"},
+                        "bibo:isbn": {label: "ISBN", containerType: "div"},
                         "bibo:edition": {label: "Edition", containerType: "div"},
                         "dcterms:Location": {label: "Location", containerType: "div"},
                         "bibo:locator": {label: "Codigo", containerType: "div"},
                         "bibo:editor": {label: "Editor", containerType: "div"},
                         "bibo:volume": {label: "Volume", containerType: "div"},
-
+                        "dcterms:provenance": {label: "Universidad perteneciente", containerType: "div"},
 
                          };
                   //      "bibo:Quote": {label: "Keywords", containerType: "div"}

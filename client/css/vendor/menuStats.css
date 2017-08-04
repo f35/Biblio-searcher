@@ -43,20 +43,23 @@
 }
 #ContainerCC_DOC {
 
-	background-image: url('/images/volcan.jpg');
+	background-image: url('/buscador/images/volcan.jpg');
 }
 
 
 #ContainerCC {
-	background-image: url('/images/volcan.jpg');
+	background-image: url('/buscador/images/volcan.jpg');
 }
 
 #ContainerCC_PER {
-	background-image: url('/images/volcan.jpg');
+	background-image: url('/buscador/images/volcan.jpg');
 }
 
 #ContainerCC_COL {
-	background-image: url('/images/volcan.jpg');
+	background-image: url('/buscador/images/volcan.jpg');
+}
+#ContainerCC_ALL {
+	background-image: url('/buscador/images/volcan.jpg');
 }
 
 

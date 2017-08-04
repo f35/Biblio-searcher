@@ -550,7 +550,7 @@ this.SearchView = Backbone.View.extend({
                                     Query += "optional { ?EntityURI <http://purl.org/ontology/bibo/Image> ?Image .  }\n";
                                     //Query += "optional { ?EntityURI  ?x ?creator . }\n";
                                     //Query += "optional { ?creator <http://xmlns.com/foaf/0.1/name> ?name .}\n";
-                                    Query += 'optional { ?EntityURI a <' + Class_  + '> } \n';
+                                    Query += ' ?EntityURI a <' + Class_  + '>  \n';
                                     var auxFullText='FILTER( mm:fulltext-search(str(?PropertyValue), "'+TextSearch+'", "es") )';
                                     Query += auxFullText.replace(/AND/g, "&");
 ;
@@ -559,8 +559,7 @@ this.SearchView = Backbone.View.extend({
                                   }
 
                             break;
-
-                          default:
+                          case 'fuseki':
                                   {
                                    Query += 'select   ?Score1 (\'' + ServiceName + '\' AS ?Endpoint) ?EntityURI (IRI(<' + Class_ + '>) AS ?EntityClass) ?EntityLabel (IRI(<' + Property_ + '>) AS ?Property) (\'' + PropertyName_ + '\' AS ?PropertyLabel) ?PropertyValue  (max(?Year1)as ?Year) (max(?Lang1) as ?Lang) (max(?Type1) as ?Type)  ((?Score1*if(count(?Score2)>0,2,1)*if(count(?Score3)>0,2,1)*if(count(?Score4)>0,' + ty + ',1)) as ?Score )   ?Image  ?organization_des \n'; //(group_concat(?Sub1; separator = "#|#") as ?Sub)
                                    Query += '{\n';
@@ -576,7 +575,39 @@ this.SearchView = Backbone.View.extend({
                                    Query += " ?provenance <http://purl.org/dc/terms/description> ?organization_des .}\n";
                                    Query += "optional { ?EntityURI a ?Type1 . filter (str(?Type1) != 'http://xmlns.com/foaf/0.1/Agent' &&  str(?Type1) != 'http://purl.org/ontology/bibo/Document') .   } \n"
                                    Query += "optional { {?EntityURI a <http://purl.org/ontology/bibo/Article> .  bind(1 as ?Score4  ). } union { ?EntityURI a <http://purl.org/net/nknouf/ns/bibtex#Mastersthesis> .  bind(1 as ?Score4  ). }  } \n"
-                                   Query += '} group by ?Endpoint ?EntityURI ?EntityClass ?EntityLabel ?Property ?PropertyLabel ?PropertyValue ?Score1 ?Image  ?organization_des limit 50 \n';
+                                //   Query += ' { EntityURI a <' + Class_ + '>} \n'
+                                   Query += '} group by ?Endpoint ?EntityURI ?EntityClass ?EntityLabel ?Property ?PropertyLabel ?PropertyValue ?Score1 ?Image  ?organization_des limit 100 \n';
+
+                                  }
+
+                            break;
+
+                          default:
+                                  {
+                                   Query += 'select  distinct ?Score1 (\'' + ServiceName + '\' AS ?Endpoint) ';
+                                   Query += '?EntityURI (IRI(<' + Class_ + '>) AS ?EntityClass) ';
+                                   Query += '?EntityLabel (IRI(<' + Property_ + '>) AS ?Property) ';
+                                   Query += '(\'' + PropertyName_ + '\' AS ?PropertyLabel) ?PropertyValue  ';
+                                   Query += '(?Year1 as ?Year) (?Lang1 as ?Lang) (?Type1 as ?Type)  ';
+                                   Query += '(1 as ?Score )  ';
+                                   Query += ' ?Image  ?organization_des \n'; //(group_concat(?Sub1; separator = "#|#") as ?Sub)'
+                                   Query += '{\n';
+                                   Query += '(?EntityURI ?Score1 ?PropertyValue) text:query (<' + Property_ + '> \'(' + TextSearch + ')\' ' + ResultLimitSubQ + ') .\n?EntityURI <' + Label_ + '> ?EntityLabel .\n';
+                                   Query += 'filter(str(?PropertyValue)!=\'\') .\n';
+                                   Query += "optional { (?EntityURI ?Score2 ?PropertyValue2) text:query (<http://purl.org/dc/terms/subject> '(" + int + ")' ) . ";
+                                   Query += " filter(str(?EntityURI)!=\'\') .} \n";
+                                   //Query += "optional { ?EntityURI <http://purl.org/dc/terms/subject> ?Sub1 .  } \n"
+                                   Query += "optional { ?EntityURI <http://purl.org/dc/terms/language> ?Lang1 .   } \n";
+                                   //Query += "optional { ?EntityURI <http://purl.org/dc/terms/language> ?Lang2 .  filter(str(?Lang2) = '" + idi + "'). bind( 1 as ?Score3  ).  } \n"
+                                   Query += "optional { ?EntityURI <http://purl.org/dc/terms/issued>  ?Year1 .}";//?y2. bind( strbefore( ?y2, '-' ) as ?y3 ).
+                                   //Query += " bind( strafter( ?y2, ' ' ) as ?y4 ). bind( if (str(?y3)='' && str(?y4)='',?y2,if(str(?y3)='',?y4,?y3)) as ?Year1 ).  }\n";
+                                   Query += "optional { ?EntityURI <http://purl.org/ontology/bibo/Image> ?Image .  }\n";
+                                   Query += "optional { ?EntityURI  <http://purl.org/dc/terms/provenance> ?provenance .\n";
+                                   Query += " ?provenance <http://purl.org/dc/terms/description> ?organization_des .}\n";
+                                   Query += "optional { ?EntityURI a ?Type1 . filter (str(?Type1) != 'http://xmlns.com/foaf/0.1/Agent' &&  str(?Type1) != 'http://purl.org/ontology/bibo/Document') .   } \n"
+                                   //Query += "optional { {?EntityURI a <http://purl.org/ontology/bibo/Article> .  bind(1 as ?Score4  ). } union { ?EntityURI a <http://purl.org/net/nknouf/ns/bibtex#Mastersthesis> .  bind(1 as ?Score4  ). }  } \n"
+                                   Query += " ?EntityURI a <" + Class_ + "> \n";
+                                   Query += '} limit 100';//group by ?Endpoint ?EntityURI ?EntityClass ?EntityLabel ?Property ?PropertyLabel ?PropertyValue ?Score1 ?Image  ?organization_des limit 50 \n';
 
                                   }
                                   break;
@@ -740,7 +771,9 @@ function sleep() {
 
     }
 }
-
+function isRec(d) {
+ return  d.includes('rec');
+}
 linkg2 = function (e) {
     var obj = e.target;
     if (obj.tagName == "SPAN") {
@@ -750,20 +783,38 @@ linkg2 = function (e) {
     var v1 = obj.attributes['data-uri'].value;
     var v2 = en.endpoint;
     var v3 = en.graphURI;
-    var redirectWindow = window.open('', '_blank');
-    Meteor.call('runQuery', v2, v3, 'select ?a {<' + v1 + '> <http://purl.org/ontology/bibo/handle> ?a} limit 1', function (error, result) {
-        if (result) {
-            var r = JSON.parse(result.content).results.bindings;
-            if (r.length == 0) {
-                redirectWindow.location = v1;
-            } else {
-                redirectWindow.location = r[0].a.value;
-            }
-        } else {
-            redirectWindow.location = v1;
-        }
+console.log(v1.indexOf("/organizacion"));
+console.log(v1.indexOf("/publisher"));
+console.log(v1.indexOf("/collection"));
+console.log(v1.indexOf("/coleccion"));
+console.log(v1.indexOf("/rec/cdjbv/contribuyente"));
+
+
+
+    if(v1.indexOf("/organizacion") >= 0 || v1.indexOf("/publisher") >= 0 || v1.indexOf("/collection") >= 0 || v1.indexOf("/coleccion") >= 0  ||  v1.indexOf("/rec/cdjbv/contribuyente")>=0)
+    {
+      var v1 = encodeURIComponent(obj.attributes['data-uri'].value);
+      var v2 = encodeURIComponent(en.endpoint);
+      var v3 = encodeURIComponent(en.graphURI);
+      var v4 = encodeURIComponent(en.typeServer);
+      window.open('/buscador/graph/' + v1 + '/' + v2 + '/' + v3 + '/' + v4);
     }
-    );
+    else{
+            var redirectWindow = window.open('', '_blank');
+            Meteor.call('runQuery', v2, v3, 'select ?a {<' + v1 + '> <http://purl.org/ontology/bibo/handle> ?a} limit 1', function (error, result) {
+                if (result) {
+                    var r = JSON.parse(result.content).results.bindings;
+                    if (r.length == 0) {
+                        redirectWindow.location = v1;
+                    } else {
+                        redirectWindow.location = r[0].a.value;
+                    }
+                } else {
+                    redirectWindow.location = v1;
+                }
+            }
+          );
+        }
     interestitem(v1);
 };
 

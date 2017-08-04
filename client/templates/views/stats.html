@@ -2,11 +2,11 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#fullpage').fullpage({
-                sectionsColor: ['#1bbc9b', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff', '#ccddff'],
-                anchors: ['p_1', 'p_2', 'p_3', 'p_4'],
+                sectionsColor: ['#1bbc9b', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff', '#ccddff', '#ccddff'],
+                anchors: ['p_1', 'p_2', 'p_3', 'p_4', 'p_5'],
                 menu: '#navigation'
             });
-            var q = '{{g1}}{{g2}}{{g3}}{{g4}}{{g5}}{{g6}}';
+            var q = '{{g1}}{{g2}}{{g3}}{{g4}}{{g5}}{{g6}}{{g7}}';
 
         });
 
@@ -37,10 +37,10 @@
 
 
 
-        </div>		
+        </div>
         <div class="section" id="section1">
             <div id="ContainerCC_DOC" style="display: flex; align-items: center;  justify-content: center; height: 100%; width: 100%;">
-                <div id="DocumentsChart" class="statDiv" style="align:'center'; float: left; height: 300px; width: 30%; background-color: white;"></div>				
+                <div id="DocumentsChart" class="statDiv" style="align:'center'; float: left; height: 300px; width: 30%; background-color: white;"></div>
                 <div id="DocumentsChart_Ctrl" class="statDiv" style="float: left; height: 300px; width: 10%; background-color: white;">
 
                     <label >{{ lang "group-by"}}</label>
@@ -107,6 +107,25 @@
             </div>
 
         </div>
+
+        <div class="section" id="section4">
+            <div id="ContainerCC_ALL" style="display: flex; align-items: center;  justify-content: center; height: 100%; width: 100%;">
+
+                <div id="CollectionsChart_Ctrl2" class="statDiv" style="float: left; height: 300px; width: 10%; background-color: white;">
+                    <label >{{ lang "Repository"}}:</label>
+                    <select id ="repositories_all" onchange="Session.set('auxAct', Session.get('auxAct') + 1)">
+                        <option value="All">{{lang "All"}}</option>
+                        {{#each endpointsAvailable}}
+                        <option value="{{name}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div id="AllDocs" class="statDiv" style="float: left; height: 300px; width: 50%; background-color: white;"></div>
+
+
+            </div>
+
+        </div>
     </div>
     {{> menuStats}}
 
@@ -122,11 +141,8 @@
         <a href="#p_2">{{ lang "Documents"}}</a>
         <a href="#p_3">{{ lang "Persons"}}</a>
         <a href="#p_4">{{ lang "Collections"}}</a>
+        <a href="#p_5">{{ lang "FB"}}</a>
 
     </div>
 
 </template>
-
-
-
-

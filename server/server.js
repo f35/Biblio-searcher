@@ -484,12 +484,13 @@ var num_auto=0;
       name: 'UpdateStats',
       schedule: function(parser) {
         // parser is a later.parse object
-        return parser.text('every 24 hours');
+//        return parser.text('every 24 hours');
+        return parser.text('every 168 hours');
+
       },
       job: function() {
           try{
             Meteor.call('updateStats');
-            console.log('Haciendo estadisticas');
           }catch(e){
             console.log('Error en  estadisticas');
             console.log(e);
@@ -992,6 +993,36 @@ Api.addRoute('sparql', {authRequired: false}, {
         //Colecciones
 
 
+        //Por organization
+        var sparql_td =" select  ?org ?de  (count (?d) as ?count) ('__' AS ?EP) "
+            sparql_td +=' { ?d a <http://purl.org/ontology/bibo/Document> .'
+            sparql_td +=' ?d <http://purl.org/dc/terms/provenance> ?org. '
+            sparql_td +='   ?org a <http://xmlns.com/foaf/0.1/Organization>.'
+            sparql_td +='   ?org <http://purl.org/dc/terms/description> ?de'
+            sparql_td +='  } '
+            sparql_td +=' group by ?org ?de';
+
+
+        sparql_ = 'select * {\n';
+        for (var i = 0; i < endp.length; i++) {
+            var endpoint = endp[i];
+            sparql_ += '{service <' + endpoint.endpoint + '> {' + '\n';
+            sparql_ += sparql_td.replace(new RegExp("__", "g"), endpoint.name) + '\n';
+            sparql_ += '}}' + '\n';
+            if (i != endp.length - 1) {
+                sparql_ += 'union' + '\n';
+            }
+        }
+
+                sparql_ += '}';
+
+                r = Meteor.call('doQueryCacheStats', {sparql: sparql_}).resultSet.value;
+                Obj = JSON.parse(r).results.bindings;
+                Stats1 = Obj;
+                  //  console.log('CONSULTA 7:'+Stats1);
+                //Statsc.insert();
+                __mongo_stats.push({cod: 7, val: Stats1});
+
 
                 Statsc.remove({});
                 for (var i = 0; i < __mongo_stats.length; i++) {
@@ -1098,6 +1129,7 @@ Api.addRoute('sparql', {authRequired: false}, {
                         var j = (aep + agr + a.sparql).trim().hashCode();
                         var k = Cache.find({key: j}).fetch();
                         var l = {};
+
                         if (0 == k.length && !f) {
                             lr = true;
                             l = Meteor.call("runQuery", aep, agr, a.sparql, undefined, g);

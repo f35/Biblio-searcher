@@ -43,7 +43,7 @@ button:active{
 }
 .lavel-up-header-bg-img{
 	/*background: url('../img/lonely-road.png') no-repeat center top fixed;*/
-	background: url('/images/volcan.jpg') no-repeat center top fixed;
+	background: url('buscador/images/volcan.jpg') no-repeat center top fixed;
 	-webkit-background-size: cover;
 	background-size: cover;
 	min-height: 800px;
@@ -51,7 +51,7 @@ button:active{
 .lavel-up-color-overlay{
 	background: rgba(0, 0, 0, 0);
 	padding-top: 70px;
-	background-image: url('/images/pattern.png');
+	background-image: url('/buscador/images/pattern.png');
 	min-height: 800px;
 }
 @media (min-width: 991px) {
@@ -221,14 +221,14 @@ margin-top: 10px;
    ========================================================================== */
 
 .lu-contact{
-	background: url('/images/contact-bg.png') no-repeat center top fixed;
+	background: url('/buscador/images/contact-bg.png') no-repeat center top fixed;
 	-webkit-background-size: cover;
 	background-size: cover;
 	color: #fff;
 }
 .lu-overlay {
   background: rgba(0, 0, 0, 0.55);
-  background-image: url('/images/pattern.png');
+  background-image: url('/buscador/images/pattern.png');
   padding: 75px 0;
 }
 
@@ -287,9 +287,9 @@ margin-top: 10px;
 }
 
 
-.documentos{background-image:url('/images/documentob.png');}
-.autores{background-image:url('/images/authorcol.png');}
-.colecciones{background-image:url('/images/collectioncolor.png');}
+.documentos{background-image:url('/buscador/images/documentob.png');}
+.autores{background-image:url('/buscador/images/authorcol.png');}
+.colecciones{background-image:url('/buscador/images/collectioncolor.png');}
 
 
 

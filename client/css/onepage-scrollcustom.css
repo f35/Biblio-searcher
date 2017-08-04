@@ -552,7 +552,7 @@ html {
     width: 40px;
     height: 80px;
     text-indent: -9999px;
-    background: url(/images/sprites.png) no-repeat 0 0;
+    background: url(/buscador/images/sprites.png) no-repeat 0 0;
     top: 50%;
     margin-top: -40px;
     z-index: 2;
@@ -580,7 +580,7 @@ html {
     text-indent: -9999px;
     width: 10px;
     height: 10px;
-    background: url(/images/sprites.png) no-repeat 0 -80px;
+    background: url(/buscador/images/sprites.png) no-repeat 0 -80px;
 }
 .wmuSliderPagination a.wmuActive {
     background-position: -10px -80px;

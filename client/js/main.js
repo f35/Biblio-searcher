@@ -1070,10 +1070,116 @@ if (Meteor.isClient) {
 
 
         },
-        endpointsAvailable: function () {
-            return Endpoints.find({status: 'A'}).fetch();
+    g7: function () {
+        Session.get('auxAct');
+        var e = document.getElementById("repositories_all");
+        var strUser2 = (e) ? e.options[e.selectedIndex].value : undefined;
+        var str = [];
+        var data = Statsc.find({cod: 7}).fetch();
+        if (strUser2 && Statsc && data && data[0] && data[0].val) {
+            data = data[0];
+            data = data.val;
+            if (strUser2 != 'All') {
+                data = data.filter(function (a) {
+                    return a.EP.value == strUser2;
+                });
+            }
+            var max = 10;
+            for (var i = 0; i < data.length; i++) {
+                if (i <= max) {
+                    str.push({value: Number(data[i].count.value), label: data[i].de.value});
+                } else {
+                    str[max].label = 'Others';
+                    str[max].value += Number(data[i].count.value);
+                }
+            }
+        } else {
+            str = [{value: 100, label: "Something"}];
         }
-    });
+        $('#AllDocs').empty();
+        try {
+
+            var pie = new d3pie("AllDocs", {
+                "header": {
+                    "title": {
+                        "text": lang.lang("FB2"),
+                        "fontSize": 22,
+                        "font": "verdana"
+                    },
+                    "subtitle": {
+                        "text": lang.lang("top-sources"),
+                        "color": "#999999",
+                        "fontSize": 10,
+                        "font": "verdana"
+                    },
+                    "titleSubtitlePadding": 12
+                },
+                "footer": {
+                    "color": "#999999",
+                    "fontSize": 11,
+                    "font": "open sans",
+                    "location": "bottom-center"
+                },
+                "size": {
+                    "canvasHeight": 300,
+                    "canvasWidth": $('#AllDocs').width(),
+                    "pieOuterRadius": "80%"
+                },
+                "data": {
+                    "sortOrder": "random",
+                    "content": str
+                },
+                "labels": {
+                    "outer": {
+                        "pieDistance": 5
+                    },
+                    "inner": {
+                        "hideWhenLessThanPercentage": 3
+                    },
+                    "mainLabel": {
+                        "font": "verdana"
+                    },
+                    "percentage": {
+                        "color": "#000000",
+                        "font": "verdana",
+                        "decimalPlaces": 0
+                    },
+                    "value": {
+                        "color": "#e1e1e1",
+                        "font": "verdana"
+                    },
+                    "lines": {
+                        "enabled": true,
+                        "style": "straight"
+                    },
+                    "truncation": {
+                        "enabled": true
+                    }
+                },
+                "effects": {
+                    "pullOutSegmentOnClick": {
+                        "effect": "linear",
+                        "speed": 400,
+                        "size": 8
+                    }
+                },
+                "tooltips": {
+                    "enabled": true,
+                    "type": "placeholder",
+                    "string": "{label}: {value}, {percentage}%"
+                }
+            });
+        } catch (az) {
+            //console.log(az);
+        }
+
+
+
+    },
+    endpointsAvailable: function () {
+        return Endpoints.find({status: 'A'}).fetch();
+    }
+});
     // Muestra consultas - JS
     Template.samples.helpers({
         queriesAvailable: function () {
@@ -1782,14 +1888,14 @@ if (Meteor.isClient) {
                     var classoftype = presentar[rand].typeofclass;
 
                     if (classoftype.includes("Person")) {
-                        presentar[rand].icon = "images/authorcol.png";
+                        presentar[rand].icon = "/buscador/images/authorcol.png";
                         presentar[rand].sizeicon = "25 px;";
                     } else if (classoftype.includes("Collection")) {
-                        presentar[rand].icon = "images/collection.png";
+                        presentar[rand].icon = "/buscador/images/collection.png";
                         presentar[rand].sizeicon = "25 px;";
                     } else {
 
-                        presentar[rand].icon = "images/documento.png";
+                        presentar[rand].icon = "/buscador/images/documento.png";
                         presentar[rand].sizeicon = "12 px;";
                     }
                     selecc[i] = presentar[rand];
@@ -1981,10 +2087,10 @@ if (Meteor.isClient) {
                     //  Session.set('DespSug', true);
                     break;
                 default :
-                    //  w = Queries.find().fetch();
-                    //  $(".sugestion-panel").css ("min-height", "400px");
-                    //$("#sug").collapse('show');
-                    //  Session.set('DespSug', false);
+                      w = Queries.find().fetch();
+                      $(".sugestion-panel").css ("min-height", "400px");
+                    $("#sug").collapse('show');
+                      Session.set('DespSug', false);
                     break;
             }
             var aux = Session.get("auxAct");
@@ -2187,6 +2293,7 @@ if (Meteor.isClient) {
                         OneResult.MatchsProperty = [{p: SearchVar_, v: resp[k][SearchVar].value, l: resp[k][SearchVar].value.length > MaxLength, s: resp[k][SearchVar].value.substr(0, MaxLength), c: resp[k][SearchVar].value.substr(MaxLength)}];
                     }
 
+                    console.log('mira '+OneResult.Type);
 
                     switch (OneResult.Type) {
                         case 'http://xmlns.com/foaf/0.1/Person':
@@ -2198,6 +2305,16 @@ if (Meteor.isClient) {
                             OneResult.Image='/buscador/images/CollectionIcon.png'
 
                             break;
+                       case 'http://xmlns.com/foaf/0.1/Organization':
+                                OneResult.Icon = 'glyphicon glyphicon-folder-open';
+                                OneResult.Image='/buscador/images/organization1.png'
+
+                                break;
+                       case 'http://purl.org/dc/terms/publisher':
+                                    OneResult.Icon = 'glyphicon glyphicon-folder-open';
+                                    OneResult.Image='/buscador/images/publisher1.png'
+
+                                    break;
                         default :
                             OneResult.Icon = 'glyphicon glyphicon-file';
                             OneResult.Image='/buscador/images/documentIcon.png'
@@ -2548,6 +2665,9 @@ if (Meteor.isClient) {
             "Year": "Year",
             "All": "All",
             "top-collections": "Top Collections",
+            "top-sources": "bibliographic resources by digital sources",
+            "FB":"bibl. Sources",
+            "FB2":"bibliographic Sources",
             "Repository": "Repository",
             "top-persons": "Top Persons",
             "Global": "Global",
@@ -2726,6 +2846,9 @@ if (Meteor.isClient) {
             "Year": "Año",
             "All": "Todos",
             "top-collections": "Colecciones Destacadas",
+            "top-sources": "Documentos bibliográficos por base digital",
+            "FB":"Fuentes Bibl.",
+            "FB2":"Fuentes Bibliográficas.",
             "Repository": "Repositorios",
             "top-persons": "Personas Destacadas",
             "Global": "Globales",
